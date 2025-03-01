@@ -130,7 +130,6 @@ android {
 }
 
 dependencies {
-    val AAVersion = "4.5.2"
 
     implementation(platform(libs.compose.bom))
     // Deprecated!!
@@ -149,10 +148,6 @@ dependencies {
     testImplementation(libs.junit)
     // Kotlin携程
     implementation(libs.kotlinx.coroutines.android)
-    // Android Annotations Deprecated!!
-    kapt("org.androidannotations:androidannotations:$AAVersion")
-    //noinspection GradleDependency
-    implementation("org.androidannotations:androidannotations-api:$AAVersion")
     // ButterKnife Deprecated!!
     implementation("com.jakewharton:butterknife:10.2.1")
     kapt("com.jakewharton:butterknife-compiler:10.2.3")
