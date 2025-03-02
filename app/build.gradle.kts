@@ -185,9 +185,6 @@ dependencies {
     implementation(libs.retrofit2.retrofit)
     implementation(libs.retrofit2.converter.gson)
     debugImplementation(libs.leakcanary.android)
-    // Optional, if you use support library fragments:
-    implementation("com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
     //Glide
     implementation(libs.glide)
     ksp(libs.glide.ksp)
