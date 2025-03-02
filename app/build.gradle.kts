@@ -175,8 +175,6 @@ dependencies {
     implementation("com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1")
     //FlexibleDivider
     implementation("com.yqritc:recyclerview-flexibledivider:1.4.0")
-    //Commons-lang
-    implementation(libs.commons.lang3)
 
     // RxJava  Deprecated!!
     implementation(libs.rxjava2)
