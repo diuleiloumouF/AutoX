@@ -13,17 +13,13 @@ class UiHandler(val context: Context) : Handler(Looper.getMainLooper()) {
         post {
             Toast.makeText(
                 context,
-                message,
+                message.toString(),
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
 
     fun toast(resId: Int) {
-        post(object : Runnable {
-            override fun run() {
-                Toast.makeText(this.context, resId, Toast.LENGTH_SHORT).show()
-            }
-        })
+        post { Toast.makeText(context, resId, Toast.LENGTH_SHORT).show() }
     }
 }
