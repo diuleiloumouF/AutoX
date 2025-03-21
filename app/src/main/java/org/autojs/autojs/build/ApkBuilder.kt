@@ -289,7 +289,7 @@ class ApkBuilder(
                 .substring(0, 16)
     }
 
-    suspend fun build(): ApkBuilder {
+    suspend fun build(): ApkBuilder = withContext(Dispatchers.IO) {
         _progressState.emit(BuildState.BUILD)
         manifestEditor?.commit()
         manifestEditor?.writeTo(FileOutputStream(manifestFile))
@@ -311,7 +311,7 @@ class ApkBuilder(
                 }
             },
         )
-        return this
+        return@withContext this@ApkBuilder
     }
 
     suspend fun sign(
@@ -428,7 +428,8 @@ class ApkBuilder(
             } else if (!projectConfig!!.launchConfig.displaySplash && splashThemeId != 0 && attr.value == splashThemeId) {
                 attr.value = noDisplayThemeId
             } else if ("authorities" == attr.name.data && attr.value is StringItem) {
-                (attr.value as StringItem).data = projectConfig!!.packageName + ".fileprovider"
+                val item = attr.value as StringItem
+                item.data = item.data.replace(inrtAppId, projectConfig!!.packageName!!)
             } else {
                 super.onAttr(attr)
             }
@@ -436,6 +437,7 @@ class ApkBuilder(
     }
 
     companion object {
+        private const val inrtAppId = "org.autojs.autoxjs.inrt"
         private const val NO_SIGN_APK_SUFFIX = "_no-sign.apk"
         private val stripPattern = Pattern.compile("^META-INF/(.*)[.](SF|RSA|DSA|MF)$")
         private const val TAG: String = "ApkBuilder"
