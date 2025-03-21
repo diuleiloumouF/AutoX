@@ -524,6 +524,7 @@ fun BuildingDialog(show: Boolean, model: BuildViewModel, onDismissRequest: () ->
                 Text(text = stringResource(R.string.text_exit))
             }
             TextButton(onClick = {
+                onDismissRequest()
                 IntentUtil.installApkOrToast(
                     context, outApk.absolutePath, AppFileProvider.AUTHORITY
                 )
