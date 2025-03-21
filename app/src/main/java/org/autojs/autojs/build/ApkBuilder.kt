@@ -363,7 +363,8 @@ class ApkBuilder(
             ARSCDecoder(BufferedInputStream(FileInputStream(oldArsc)), null as ResTable?, false)
         FileOutputStream(newArsc).use {
             //这里替换包名后会导致资源文件出错，因此还是用原包名"org.autojs.autoxjs.inrt"
-            decoder.CloneArsc(it, "org.autojs.autoxjs.inrt", false)
+            //2025/3/21 fix: 资源不再与包名绑定
+            decoder.CloneArsc(it, arscPackageName, false)
         }
         val util = ArscUtil()
         util.openArsc(newArsc.absolutePath) { _, type, key, value, id ->
