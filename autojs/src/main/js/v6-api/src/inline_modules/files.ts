@@ -11,7 +11,8 @@ scope.$files = files;
 setGlobalAnd$('io', files)
 
 declare global {
-    var open: (path: string, mode?: FileMode, encoding?: string, bufferSize?: number) => any
+    var open: (path: string, mode?: FileMode, encoding?:
+        string, bufferSize?: number) => Autox.PFileInterface
     var files: Autox.Files
     var $files: Autox.Files
 }
