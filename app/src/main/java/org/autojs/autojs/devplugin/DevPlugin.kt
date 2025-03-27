@@ -148,7 +148,7 @@ object DevPlugin {
 
     suspend fun startUSBDebug() {
         withContext(Dispatchers.IO) {
-            server.listen(SERVER_PORT, "/", host = "127.0.0.1") {
+            server.listen(SERVER_PORT, "/", host = "0.0.0.0") {
                 newConnection(this)
             }
         }
