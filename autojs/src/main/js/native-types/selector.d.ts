@@ -1,11 +1,60 @@
 namespace Autox {
     interface UiSelector extends UiGlobalSelector {
         find(max?: number): UiObjectCollection
+        findOne(timeout?: number): UiObject
+        findOnce(index?: number): UiObject?;
+        exists(): boolean
+        untilFindOne(): UiObject
+        waitFor(): void
         textMatches(regex: string): UiGlobalSelector
         convertRegex(regex: string): string
     }
-    interface UiObjectCollection {
+    interface UiObject {
+        parent(): UiObject
+        child(i: number): UiObject
+        indexInParent(): number
+        find(selector: UiGlobalSelector): UiObjectCollection
+        findOne(selector: UiGlobalSelector): UiObject?;
+        children(): UiObjectCollection
+        childCount(): number
+        bounds(): Rect
+        boundsInParent(): Rect
+        drawingOrder(): number
+        id(): string
+        text(): string
+        findByText(str): UiObjectCollection
 
+        click(): boolean
+        longClick(): boolean
+        accessibilityFocus(): boolean
+        clearAccessibilityFocus(): boolean
+        focus(): boolean
+        clearFocus(): boolean
+        copy(): boolean
+        paste(): boolean
+        select(): boolean
+        cut(): boolean
+        collapse(): boolean
+        expand(): boolean
+        dismiss(): boolean
+        show(): boolean
+        scrollForward(): boolean
+        scrollBackward(): boolean
+        scrollUp(): boolean
+        scrollDown(): boolean
+        scrollLeft(): boolean
+        scrollRight(): boolean
+        contextClick(): boolean
+        setSelection(s: number, e: number): boolean
+        setText(text: string): boolean
+        setProgress(value: number): boolean
+        scrollTo(row: number, column: number): boolean
+
+    }
+    interface UiObjectCollection extends Array<UiObject> {
+        empty(): boolean
+        find(selector: UiGlobalSelector): UiObjectCollection
+        findOne(selector: UiGlobalSelector): UiObject?;
     }
     interface UiGlobalSelector {
         id(id: string): this
@@ -38,23 +87,23 @@ namespace Autox {
         boundsContains(l: number, t: number, r: number, b: number): this
         drawingOrder(order: number): this
         //
-        checkable(b?: Boolean): this
-        checked(b?: Boolean): this
-        focusable(b?: Boolean): this
-        focused(b?: Boolean): this
-        visibleToUser(b?: Boolean): this
-        accessibilityFocused(b?: Boolean): this
-        selected(b?: Boolean): this
-        clickable(b?: Boolean): this
-        longClickable(b?: Boolean): this
-        enabled(b?: Boolean): this
-        password(b?: Boolean): this
-        scrollable(b?: Boolean): this
-        editable(b?: Boolean): this
-        contentInvalid(b?: Boolean): this
-        contextClickable(b?: Boolean): this
-        multiLine(b?: Boolean): this
-        dismissable(b?: Boolean): this
+        checkable(b?: boolean): this
+        checked(b?: boolean): this
+        focusable(b?: boolean): this
+        focused(b?: boolean): this
+        visibleToUser(b?: boolean): this
+        accessibilityFocused(b?: boolean): this
+        selected(b?: boolean): this
+        clickable(b?: boolean): this
+        longClickable(b?: boolean): this
+        enabled(b?: boolean): this
+        password(b?: boolean): this
+        scrollable(b?: boolean): this
+        editable(b?: boolean): this
+        contentInvalid(b?: boolean): this
+        contextClickable(b?: boolean): this
+        multiLine(b?: boolean): this
+        dismissable(b?: boolean): this
         //
         depth(d: number): this
         row(d: number): this

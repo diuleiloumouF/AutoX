@@ -7,12 +7,16 @@ import media, { Media } from './inline_modules/media'
 import ui, { Ui } from './inline_modules/ui'
 import selector from './inline_modules/selector'
 import threads from './inline_modules/threads'
+import floaty from './inline_modules/floaty'
+import images from './images'
 
 type _threads = typeof threads
 type _selector = typeof selector
 type _shell = typeof shell
 type _shizuku = typeof shizuku
 type _base64 = typeof base64
+type _floaty = typeof floaty
+type _images = typeof images
 declare global {
     var shizuku: _shizuku
     var media: Media
@@ -21,7 +25,10 @@ declare global {
     var base64: _base64
     var selector: _selector
     var threads: _threads
+    var floaty: _floaty
+    var images: _images
 }
+
 
 setGlobalAnd$('selector', selector)
 setGlobal('shizuku', shizuku)
@@ -30,6 +37,8 @@ setGlobalAnd$('base64', base64)
 setGlobalAnd$('shell', shell)
 setGlobalAnd$("media", media)
 setGlobalAnd$('threads', threads)
+setGlobalAnd$('floaty', floaty)
+setGlobalAnd$('images', images)
 
 setGlobal('KeyEvent', android.view.KeyEvent);
 setGlobal('Paint', android.graphics.Paint);

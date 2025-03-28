@@ -93,6 +93,11 @@ namespace Autox {
         atomic(value: number | bigint): any
         hasRunningThreads(): boolean
     }
+    interface Image {
+        mat: any
+        height: number
+        width: number
+    }
     interface Runtime {
         shizuku: Shizuku
         shell: Shell
@@ -100,6 +105,10 @@ namespace Autox {
         media: Media
         ui: Ui
         threads: Threads
+        floaty: any
+        colors: any
+        images: any
+        bridges: any
         evalInContext(script: string, context: Object): any
         getUiHandler: () => any
         selector(): UiSelector

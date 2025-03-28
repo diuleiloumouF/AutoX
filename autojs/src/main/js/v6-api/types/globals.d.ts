@@ -20,3 +20,5 @@ declare var context: android.Context
 declare var runtime: Autox.Runtime
 
 declare var exit: (err?) => void
+
+declare var util: any

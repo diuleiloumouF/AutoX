@@ -1,4 +1,4 @@
-import { exitIfError } from "@/utils"
+import { defineGetter, exitIfError } from "@/utils"
 import './ui_jsx'
 
 export type XML = {
@@ -229,7 +229,7 @@ var ui: Ui = {
             `)
     })()
 };
-ui.__defineGetter__("emitter", () => activity ? activity.getEventEmitter() : null);
+defineGetter(ui, "emitter", () => activity ? activity.getEventEmitter() : null);
 
 
 runtime.ui.bindingContext = global;

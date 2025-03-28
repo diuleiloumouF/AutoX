@@ -27,3 +27,19 @@ export function exitIfError(action: () => void, defReturnValue?: any) {
         return defReturnValue;
     }
 };
+
+export function defineGetter(obj: any, prop: string, getter: <T>() => T) {
+    Object.defineProperty(obj, prop, { get: getter });
+}
+
+export function asGlobal(obj: any, keys: string[]) {
+    var len = keys.length;
+    for (var i = 0; i < len; i++) {
+        var funcName = keys[i];
+        var func = obj[funcName]
+        if (!func) {
+            continue;
+        }
+        (global as any)[funcName] = func.bind(obj);
+    }
+}

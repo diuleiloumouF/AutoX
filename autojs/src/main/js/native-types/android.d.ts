@@ -32,4 +32,16 @@ namespace android {
         addCategory: (category: string) => this;
     }
 
+    interface Rect {
+        left: number;
+        top: number;
+        right: number;
+        bottom: number;
+        centerX(): number;
+        centerY(): number;
+        width(): number;
+        height(): number;
+        contains(r: Rect): boolean;
+        intersect(r: Rect): boolean;
+    }
 }

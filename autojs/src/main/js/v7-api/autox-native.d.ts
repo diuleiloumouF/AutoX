@@ -1,7 +1,7 @@
 
 declare let Autox = {
     ...root,
-    java = java,
+    java = javaModule,
     clipManager = clipManager,
     media = media,
     toast = toast,
