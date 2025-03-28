@@ -15,9 +15,13 @@ import com.stardust.autojs.runtime.api.AppUtils
 import com.stardust.autojs.runtime.api.Console
 import com.stardust.autojs.runtime.api.ConsoleExtension
 import com.stardust.autojs.runtime.api.Events
+import com.stardust.autojs.runtime.api.GoogleMLKit
 import com.stardust.autojs.runtime.api.Keyboard
+import com.stardust.autojs.runtime.api.Paddle
+import com.stardust.autojs.runtime.api.Plugins
 import com.stardust.autojs.runtime.api.ScriptShell
 import com.stardust.autojs.runtime.api.Sensors
+import com.stardust.autojs.runtime.api.SevenZip
 import com.stardust.autojs.runtime.api.Shizuku
 import com.stardust.autojs.runtime.api.Threads
 import com.stardust.autojs.runtime.api.Timers
@@ -42,6 +46,16 @@ class ScriptRuntimeV2(val builder: Builder) : ScriptRuntime(builder) {
     val shell = ScriptShell()
     val keyboard = Keyboard()
     val shizuku = Shizuku(uiHandler.context)
+
+    val gmlkit: GoogleMLKit = GoogleMLKit()
+
+    val paddle: Paddle = Paddle()
+
+    @ScriptVariable
+    val plugins: Plugins = Plugins(uiHandler.context, this)
+
+    @ScriptVariable
+    var zips: SevenZip = SevenZip()
 
     @ScriptVariable
     val automator = SimpleActionAutomator(accessibilityBridge, this)

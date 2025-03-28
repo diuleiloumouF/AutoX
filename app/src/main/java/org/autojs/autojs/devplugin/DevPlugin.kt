@@ -53,7 +53,7 @@ object DevPlugin {
         }
     }
 
-    private val gson get() = Gson()
+    private val gson = Gson()
     const val SERVER_PORT = 9317
     private const val CLIENT_VERSION = 2
     private const val TAG = "DevPlugin"
