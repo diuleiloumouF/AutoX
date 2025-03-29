@@ -1,5 +1,6 @@
 package com.stardust.autojs.runtime
 
+import android.os.Handler
 import com.stardust.autojs.ScriptEngineService
 import com.stardust.autojs.annotation.ScriptInterface
 import com.stardust.autojs.annotation.ScriptVariable
@@ -58,7 +59,7 @@ class ScriptRuntimeV2(val builder: Builder) : ScriptRuntime(builder) {
     var zips: SevenZip = SevenZip()
 
     @ScriptVariable
-    val automator = SimpleActionAutomator(accessibilityBridge, this)
+    val automator = SimpleActionAutomator(accessibilityBridge) { Handler(loopers.servantLooper) }
 
 
     init {

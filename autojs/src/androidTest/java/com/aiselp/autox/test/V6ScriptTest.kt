@@ -1,4 +1,4 @@
-package com.stardust.autojs
+package com.aiselp.autox.test
 
 import android.app.Application
 import androidx.test.core.app.ActivityScenario
@@ -9,15 +9,19 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.aiselp.autox.test.activicy.TestLogActivity
-import com.stardust.app.GlobalAppContext
+import com.aiselp.autox.test.utils.getGlobalProperty
+import com.aiselp.autox.test.utils.toDouble
+import com.stardust.autojs.AutoJs
+import com.stardust.autojs.R
+import com.stardust.autojs.ScriptEngineService
+import com.stardust.autojs.ScriptResultViewer
+import com.stardust.autojs.TestAutojs
 import com.stardust.autojs.script.ScriptSource
 import com.stardust.autojs.script.StringScriptSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -133,19 +137,8 @@ class V6ScriptTest {
 
         init {
             val application: Application = ApplicationProvider.getApplicationContext()
-            GlobalAppContext.set(
-                application,
-                com.stardust.app.BuildConfig(
-                    true, "org.autojs.autoxjs", VERSION_CODE = BuildConfig.VERSION_CODE.toLong(),
-                )
-            )
 //            val context = InstrumentationRegistry.getInstrumentation().targetContext
-            runBlocking {
-                withContext(Dispatchers.Main) {
-                    TestAutojs.init(application)
-                }
-            }
-
+            TestAutojs.init(application)
         }
     }
 }

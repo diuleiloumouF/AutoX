@@ -109,6 +109,9 @@ namespace Autox {
         colors: any
         images: any
         bridges: any
+        automator: Automator
+        accessibilityBridge: any
+        getScreenMetrics(): any
         evalInContext(script: string, context: Object): any
         getUiHandler: () => any
         selector(): UiSelector

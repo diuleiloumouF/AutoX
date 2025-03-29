@@ -9,4 +9,5 @@ declare let Autox = {
     dialogs = dialogs,
     engines = engines,
     app = app,
+    accessibility = accessibility
 }

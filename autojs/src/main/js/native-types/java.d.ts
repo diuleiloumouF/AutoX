@@ -3,6 +3,7 @@ declare namespace java {
         toString(): string;
     }
     export interface JavaClass {
+        new(...args: any): javaObject;
         readonly name: string;
     }
 

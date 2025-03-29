@@ -1,4 +1,4 @@
-package com.stardust.autojs
+package com.aiselp.autox.test
 
 
 import androidx.test.ext.junit.runners.AndroidJUnit4

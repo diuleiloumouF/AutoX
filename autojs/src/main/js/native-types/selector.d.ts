@@ -121,4 +121,18 @@ namespace Autox {
         findAndReturnList(node: UiObject, max: number): Array<UiObject>
     }
 
+    interface Automator {
+        [key: string]: any
+        back(): void
+        home(): void
+        powerDialog(): void
+        notifications(): void
+        quickSettings(): void
+        recents(): void
+        splitScreen(): void
+        takeScreenshot(): void
+        lockScreen(): void
+        swipe(x1: number, y1: number, x2: number, y2: number, duration: number): void
+        gesture(id: number, duration: number, ...args: [number, number][]): void
+    }
 }

@@ -9,6 +9,7 @@ import selector from './inline_modules/selector'
 import threads from './inline_modules/threads'
 import floaty from './inline_modules/floaty'
 import images from './images'
+import automator from './inline_modules/automator'
 
 type _threads = typeof threads
 type _selector = typeof selector
@@ -17,6 +18,7 @@ type _shizuku = typeof shizuku
 type _base64 = typeof base64
 type _floaty = typeof floaty
 type _images = typeof images
+type _automator = typeof automator
 declare global {
     var shizuku: _shizuku
     var media: Media
@@ -27,6 +29,7 @@ declare global {
     var threads: _threads
     var floaty: _floaty
     var images: _images
+    var automator: _automator
 }
 
 
@@ -39,6 +42,7 @@ setGlobalAnd$("media", media)
 setGlobalAnd$('threads', threads)
 setGlobalAnd$('floaty', floaty)
 setGlobalAnd$('images', images)
+setGlobalAnd$('automator', automator)
 
 setGlobal('KeyEvent', android.view.KeyEvent);
 setGlobal('Paint', android.graphics.Paint);
