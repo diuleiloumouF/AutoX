@@ -17,6 +17,10 @@ import _http from './http'
 import _dialogs from './dialogs'
 import _$cypto from './inline_modules/$crypto'
 import _$zip from './inline_modules/$zip'
+import _events from './inline_modules/events'
+import _paddle from './inline_modules/paddle'
+import _plugins from './inline_modules/plugins'
+import _sensors from './inline_modules/sensors'
 
 
 declare global {
@@ -37,6 +41,10 @@ declare global {
     var dialogs: typeof _dialogs
     var $crypto: typeof _$cypto
     var $zip: typeof _$zip
+    var events: typeof _events
+    var paddle: typeof _paddle
+    var plugins: typeof _plugins
+    var sensors: typeof _sensors
 }
 
 
@@ -55,6 +63,10 @@ setGlobalAnd$('storages', _storages)
 setGlobalAnd$('engines', _engines)
 setGlobalAnd$('http', _http)
 setGlobalAnd$('dialogs', _dialogs)
+setGlobalAnd$('events', _events)
+setGlobalAnd$('paddle', _paddle)
+setGlobalAnd$('plugins', _plugins)
+setGlobalAnd$('sensors', _sensors)
 
 setGlobal('$crypto', _$cypto)
 setGlobal('$zip', _$zip)

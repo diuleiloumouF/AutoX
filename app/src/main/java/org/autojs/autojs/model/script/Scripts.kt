@@ -109,6 +109,7 @@ object Scripts {
         edit(context, ScriptFile(path))
     }
 
+    @JvmOverloads
     fun run(
         file: File,
         config: ExecutionConfig = ExecutionConfig(workingDirectory = file.parent)

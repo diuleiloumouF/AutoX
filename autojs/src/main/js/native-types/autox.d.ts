@@ -150,6 +150,9 @@ namespace Autox {
         app: AppUtils
         engines: Engines
         dialogs: any
+        events: Events
+        plugins: any
+        sensors: any
         getScreenMetrics(): any
         evalInContext(script: string, context: Object): any
         getUiHandler: () => any
