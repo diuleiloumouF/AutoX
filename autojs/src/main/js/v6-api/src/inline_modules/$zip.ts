@@ -1,8 +1,8 @@
+import $files from "./files";
 const ZipFile = Packages.net.lingala.zip4j.core.ZipFile;
 const File = java.io.File;
 const ArrayList = java.util.ArrayList;
 const bridges = runtime.bridges
-const $files = global.$files;
 const Zip4jConstants = Packages.net.lingala.zip4j.util.Zip4jConstants;
 
 function $zip() {
