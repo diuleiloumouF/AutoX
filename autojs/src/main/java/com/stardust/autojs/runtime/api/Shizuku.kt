@@ -1,7 +1,6 @@
 package com.stardust.autojs.runtime.api
 
 import android.content.Context
-import com.google.android.accessibility.selecttospeak.SelectToSpeakService
 import com.stardust.autojs.annotation.ScriptInterface
 import com.stardust.autojs.core.shizuku.ShizukuClient
 import com.stardust.autojs.core.util.Shell2
@@ -50,8 +49,8 @@ class Shizuku(context: Context) {
     }
 
     companion object {
-        private val accessibilityServiceName = SelectToSpeakService::class.java.name
-            //com.stardust.autojs.core.accessibility.AccessibilityService::class.java.name
+        private val accessibilityServiceName =
+            com.stardust.autojs.core.accessibility.AccessibilityService::class.java.name
         private val fId = AtomicInteger(1)
     }
 }
