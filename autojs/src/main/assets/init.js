@@ -64,7 +64,7 @@ runtime.init();
     require("array-observe.min")();
     //初始化一般模块
     (function (scope) {
-        var modules = ['console', 'web', "RootAutomator"];
+        var modules = ['console', "RootAutomator"];
         var len = modules.length;
         for (var i = 0; i < len; i++) {
             var m = modules[i];
@@ -77,11 +77,6 @@ runtime.init();
     })(global);
 
     require("/android_asset/v6modules/init.js")
-
-    //重定向require以便支持相对路径和npm模块
-    Module = require("jvm-npm.js");
-    require = Module.require;
-
 
 })();
 
