@@ -1,11 +1,15 @@
 package com.stardust.autojs.core.inputevent;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+
 import android.text.TextUtils;
 
 import com.stardust.autojs.core.record.inputevent.EventFormatException;
-import com.stardust.autojs.core.util.Shell;
+import com.stardust.autojs.core.util.Shell2;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
@@ -69,7 +73,7 @@ public class InputEventObserver {
     private static InputEventObserver sGlobal;
     private CopyOnWriteArrayList<InputEventListener> mInputEventListeners = new CopyOnWriteArrayList<>();
     private Context mContext;
-    private Shell mShell;
+    private Shell2 mShell;
 
     public InputEventObserver(Context context) {
         mContext = context;
@@ -92,13 +96,19 @@ public class InputEventObserver {
     public void observe() {
         if (mShell != null)
             throw new IllegalStateException("observe() should be called only once");
-        mShell = new Shell(mContext, true);
-        mShell.setCallback(new Shell.SimpleCallback() {
+        try {
+            mShell = new Shell2("su");
+        } catch (Exception e) {
+            return;
+        }
+        mShell.setCallback(new Shell2.Callback() {
+            @Override
+            public void onOutput(@Nullable String str) {
+            }
+
             @Override
             public void onNewLine(String str) {
-                if (mShell.isInitialized()) {
-                    onInputEvent(str);
-                }
+                onInputEvent(str);
             }
 
             @Override

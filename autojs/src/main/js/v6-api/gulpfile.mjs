@@ -14,36 +14,16 @@ async function copyTypeFile(cb) {
     await copy('./types', './dist/types')
     cb()
 }
-export async function createPackageFile(cb) {
-    const modules = await fs.readdir('./dist')
-    await Promise.all(modules.map(async function (module) {
-        const path = "./dist/" + module
-        const stat = await fs.stat(path)
-        if (stat.isDirectory()) {
-            await fs.writeFile(path + "/package.json", JSON.stringify({
-                name: module,
-                version: '0.0.0',
-                type: "module",
-                main: "index.js"
-            }, undefined, 2))
-        }
-    })
-    )
-    cb()
-}
+
 async function createRootPackageFile(cb) {
     const n = JSON.parse(await fs.readFile('./package.json', 'utf8'))
-    const bin = {
-        "install-autox-types": "./srcipts/install-types.mjs"
-    }
-    // await copy('./srcipts', './dist/srcipts')
     const packageFile = {
         name: n.name,
         version: n.version,
         type: "commonjs",
-        bin,
         license: n.license,
         author: n.author,
+        publishConfig: n.publishConfig,
         dependencies: n.dependencies
     }
     await fs.writeFile('./dist/package.json', JSON.stringify(packageFile, undefined, 2))
@@ -59,7 +39,12 @@ export const build = series(
             await Promise.all(option.output.map(bundle.write))
         }
     },
-    // createPackageFile,
     copyTypeFile,
     createRootPackageFile,
+    copySrcRaw,
 )
+
+export async function copySrcRaw(cb) {
+    await copy('./src_raw', './dist')
+    cb()
+}

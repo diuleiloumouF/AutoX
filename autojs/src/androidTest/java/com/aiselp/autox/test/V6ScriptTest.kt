@@ -81,34 +81,36 @@ class V6ScriptTest {
 
     @Test
     fun shell_test(): Unit = runBlocking {
-        val resultViewer = ScriptResultViewer()
-        val execute =
-            getScriptEngineService().execute(openScriptSource("shell.js"), resultViewer)
-        resultViewer.waitForSuccess(3000) { execute.engine.forceStop() }
+        runScriptAssetSuccessfully("shell.js", 3000)
     }
 
     @Test
-    fun threads_test(): Unit = runBlocking {
-        val resultViewer = ScriptResultViewer()
-        val execute =
-            getScriptEngineService().execute(openScriptSource("threads.js"), resultViewer)
-        resultViewer.waitForSuccess(5000) { execute.engine.forceStop() }
+    fun threads_test() {
+        runScriptAssetSuccessfully("threads.js", 5000)
     }
 
     @Test
-    fun emitter_test(): Unit = runBlocking {
+    fun threads2_test() {
         val resultViewer = ScriptResultViewer()
         val execute =
-            getScriptEngineService().execute(openScriptSource("emitter.js"), resultViewer)
-        resultViewer.waitForSuccess(2500) { execute.engine.forceStop() }
+            getScriptEngineService().execute(openScriptSource("threads2.js"), resultViewer)
+        runBlocking {
+            resultViewer.waitForSuccess(5000) { execute.engine.forceStop() }
+        }
+        assert(execute.engine.getGlobalProperty("a") == 4.0)
+        assert(execute.engine.getGlobalProperty("b") == 6.0)
+        assert(execute.engine.getGlobalProperty("c") == 7.0)
+        assert(execute.engine.getGlobalProperty("d") == 99.0)
     }
 
     @Test
-    fun base64_test(): Unit = runBlocking {
-        val resultViewer = ScriptResultViewer()
-        val execute =
-            getScriptEngineService().execute(openScriptSource("base64.js"), resultViewer)
-        resultViewer.waitForSuccess(5000) { execute.engine.forceStop() }
+    fun emitter_test() {
+        runScriptAssetSuccessfully("emitter.js", 2500)
+    }
+
+    @Test
+    fun base64_test() {
+        runScriptAssetSuccessfully("base64.js", 2500)
     }
 
     @Test
@@ -150,23 +152,13 @@ class V6ScriptTest {
     }
 
     @Test
-    fun java_type(): Unit = runBlocking {
-        val resultViewer = ScriptResultViewer()
-        getScriptEngineService().execute(
-            openScriptSource("java_type.js"),
-            resultViewer,
-        )
-        resultViewer.waitForSuccess()
+    fun java_type() {
+        runScriptAssetSuccessfully("java_type.js", 1000)
     }
 
     @Test
-    fun java_adapter(): Unit = runBlocking {
-        val resultViewer = ScriptResultViewer()
-        getScriptEngineService().execute(
-            openScriptSource("java_adapter.js"),
-            resultViewer
-        )
-        resultViewer.waitForSuccess()
+    fun java_adapter() {
+        runScriptAssetSuccessfully("java_adapter.js", 1000)
     }
 
     @Test
@@ -179,6 +171,45 @@ class V6ScriptTest {
             ExecutionConfig(workingDirectory = dir.pathString)
         )
         resultViewer.waitForSuccess()
+    }
+
+    @Test
+    fun images_transparentMask(): Unit = runBlocking {
+        val dir = openAssetDir(application, "$v6AccessDir/images_transparentMask")
+        val resultViewer = ScriptResultViewer()
+        getScriptEngineService().execute(
+            ScriptFile(dir.resolve("test.js").pathString).toSource(),
+            resultViewer,
+            ExecutionConfig(workingDirectory = dir.pathString)
+        )
+        resultViewer.waitForSuccess()
+    }
+
+    @Test
+    fun modules_import() {
+        runScriptAssetSuccessfully("modules_import.js")
+    }
+
+    @Test
+    fun http() {
+        val file = openScriptAsset(application, "utils/http_server.mjs")
+        val execute = getScriptEngineService().execute(ScriptFile(file.toFile()).toSource())
+        Thread.sleep(200)
+        try {
+            runScriptAssetSuccessfully("http.js", 5000)
+        } finally {
+            execute.engine.forceStop()
+            Thread.sleep(200)
+        }
+    }
+
+    fun runScriptAssetSuccessfully(assetName: String, timeout: Long = 60 * 1000): Unit {
+        val resultViewer = ScriptResultViewer()
+        val execute =
+            getScriptEngineService().execute(openScriptSource(assetName), resultViewer)
+        runBlocking {
+            resultViewer.waitForSuccess(timeout) { execute.engine.forceStop() }
+        }
     }
 
     companion object {

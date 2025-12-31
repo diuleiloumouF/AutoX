@@ -15,7 +15,7 @@ jobs:
           echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: checkout
         id: check
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           submodules: recursive
       - name: set up JDK 17
@@ -24,7 +24,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 20.x
       - name: Setup Android SDK
@@ -78,10 +78,11 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           npm publish || true
         continue-on-error: true
-      - name: publish v7-modules
+      - name: publish v6-modules
         if: github.repository == 'aiselp/AutoX'
         run: |
           cd autojs/src/main/js/v6-api/dist
+          find ./ -name "*.js" -type f -delete
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           npm publish || true
         continue-on-error: true

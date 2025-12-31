@@ -6,11 +6,11 @@ import './inline_modules/files'
 import media, { Media } from './inline_modules/media'
 import ui, { Ui } from './inline_modules/ui'
 import _selector from './inline_modules/selector'
-import _threads from './inline_modules/threads'
+import _threads from './therads'
 import _floaty from './inline_modules/floaty'
 import _images from './images'
 import _automator from './inline_modules/automator'
-import _app from './inline_modules/app'
+import _app from './app'
 import _storages from './inline_modules/storages'
 import _engines from './inline_modules/engines'
 import _http from './http'
@@ -49,28 +49,29 @@ declare global {
     var web: typeof _web
 }
 
+setGlobalAnd$({
+    selector: _selector,
+    ui: ui,
+    base64: _base64,
+    shell: _shell,
+    media: media,
+    threads: _threads,
+    floaty: _floaty,
+    images: _images,
+    automator: _automator,
+    app: _app,
+    storages: _storages,
+    engines: _engines,
+    http: _http,
+    dialogs: _dialogs,
+    events: _events,
+    paddle: _paddle,
+    plugins: _plugins,
+    sensors: _sensors,
+    web: _web
+})
 
-setGlobalAnd$('selector', _selector)
 setGlobal('shizuku', _shizuku)
-setGlobalAnd$('ui', ui)
-setGlobalAnd$('base64', _base64)
-setGlobalAnd$('shell', _shell)
-setGlobalAnd$("media", media)
-setGlobalAnd$('threads', _threads)
-setGlobalAnd$('floaty', _floaty)
-setGlobalAnd$('images', _images)
-setGlobalAnd$('automator', _automator)
-setGlobalAnd$('app', _app)
-setGlobalAnd$('storages', _storages)
-setGlobalAnd$('engines', _engines)
-setGlobalAnd$('http', _http)
-setGlobalAnd$('dialogs', _dialogs)
-setGlobalAnd$('events', _events)
-setGlobalAnd$('paddle', _paddle)
-setGlobalAnd$('plugins', _plugins)
-setGlobalAnd$('sensors', _sensors)
-setGlobalAnd$('web', _web)
-
 setGlobal('$crypto', _$cypto)
 setGlobal('$zip', _$zip)
 

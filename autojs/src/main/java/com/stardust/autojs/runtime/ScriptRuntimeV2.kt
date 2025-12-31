@@ -1,14 +1,18 @@
 package com.stardust.autojs.runtime
 
 import android.os.Handler
+import com.github.aiselp.autox.api.TermuxApi
 import com.stardust.autojs.ScriptEngineService
 import com.stardust.autojs.annotation.ScriptInterface
 import com.stardust.autojs.annotation.ScriptVariable
 import com.stardust.autojs.core.accessibility.AccessibilityBridge
 import com.stardust.autojs.core.accessibility.SimpleActionAutomator
 import com.stardust.autojs.core.console.ConsoleImpl
+import com.stardust.autojs.core.http.MutableOkHttp
 import com.stardust.autojs.core.image.capture.ScreenCaptureRequester
 import com.stardust.autojs.core.looper.Loopers
+import com.stardust.autojs.core.util.WeakReferenceKey
+import com.stardust.autojs.onnx.OnnxModule
 import com.stardust.autojs.rhino.AndroidClassLoader
 import com.stardust.autojs.rhino.TopLevelScope
 import com.stardust.autojs.runtime.api.AppUtils
@@ -41,10 +45,14 @@ import java.io.StringReader
 import java.io.StringWriter
 
 class ScriptRuntimeV2(val builder: Builder) : ScriptRuntime(builder) {
+    val weakReferenceKey = WeakReferenceKey()
     lateinit var consoleExtension: ConsoleExtension
     val shell = ScriptShell()
     val keyboard = Keyboard()
+    val mutableOkHttp = MutableOkHttp()
     val shizuku = Shizuku(uiHandler.context)
+
+    val termux = TermuxApi(uiHandler.context)
 
     val gmlkit: GoogleMLKit = GoogleMLKit()
 
@@ -59,6 +67,8 @@ class ScriptRuntimeV2(val builder: Builder) : ScriptRuntime(builder) {
     @ScriptVariable
     val automator = SimpleActionAutomator(accessibilityBridge) { Handler(loopers.servantLooper) }
 
+    @ScriptVariable
+    val onnx: OnnxModule = OnnxModule(this)
 
     init {
         automator.setScreenMetrics(mScreenMetrics)
@@ -130,8 +140,11 @@ class ScriptRuntimeV2(val builder: Builder) : ScriptRuntime(builder) {
 
     override fun onExit() {
         super.onExit()
+        mutableOkHttp.destroy()
+        weakReferenceKey.release()
         shell.recycle(console)
         shizuku.recycle()
+        termux.recycle()
         consoleExtension.close()
         ObjectWatcher.default.watch(this, engines.myEngine().toString() + "::" + TAG)
     }
